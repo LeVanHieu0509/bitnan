@@ -11,9 +11,12 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+// Application là một StatefulWidget, nghĩa là widget này có thể thay đổi
+// trạng thái trong suốt vòng đời của ứng dụng (ví dụ: thay đổi ngôn ngữ, theme, v.v.).
 class Application extends StatefulWidget {
   const Application({Key? key}) : super(key: key);
 
+  // createState() trả về _ApplicationState(), nơi chúng ta quản lý trạng thái của widget.
   @override
   createState() => _ApplicationState();
 }
@@ -21,6 +24,7 @@ class Application extends StatefulWidget {
 class _ApplicationState extends State<Application> {
   Locale locale = const Locale('vi', 'VN');
 
+  // initState() là phương thức khởi tạo khi widget được tạo ra lần đầu tiên.
   @override
   void initState() {
     super.initState();
@@ -58,6 +62,8 @@ class _ApplicationState extends State<Application> {
     );
   }
 
+  // Phương thức này gọi initConfig() để thiết lập cấu hình ban đầu cho ứng dụng,
+  // bao gồm việc tải ngôn ngữ người dùng, khởi tạo loading và các cấu hình khác.
   Future initConfig() async {
     // await setBaseUrl();
     await getLang();
@@ -76,6 +82,8 @@ class _ApplicationState extends State<Application> {
 
   Future getLang() async {
     final store = Get.find<DataStorage>();
+
+    print(store.getLang());
     if (store.getLang() == 'vi') {
       setState(() {
         locale = const Locale('vi', 'VN');

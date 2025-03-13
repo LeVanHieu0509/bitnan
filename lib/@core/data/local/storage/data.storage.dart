@@ -1,3 +1,4 @@
+import 'package:bitnan/@core/data/repo/model/token.model.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -55,10 +56,10 @@ class DataStorage {
 
   bool getNotification() => _storage.read(_notification) ?? true;
 
-  // Future setToken(TokenModel model) async {
-  //   await _storage.write(_token, model.accessToken);
-  //   await _storage.write(_refreshToken, model.refreshToken);
-  // }
+  Future setToken(TokenModel model) async {
+    await _storage.write(_token, model.accessToken);
+    await _storage.write(_refreshToken, model.refreshToken);
+  }
 
   Future clearToken() async {
     await _storage.write(_token, '');
