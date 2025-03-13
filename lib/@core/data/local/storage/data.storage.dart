@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:bitnan/@core/data/repo/model/token.model.dart';
+import 'package:bitnan/@core/data/repo/model/user.model.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -96,19 +99,19 @@ class DataStorage {
   int getDateRate() =>
       _storage.read<int>(_dateRate) ?? DateTime.now().millisecondsSinceEpoch;
 
-  // Future setUser(UserModel model) async {
-  //   var json = jsonEncode(model.toMap());
-  //   await _storage.write(_userInfo, json);
-  // }
+  Future setUser(UserModel model) async {
+    var json = jsonEncode(model.toMap());
+    await _storage.write(_userInfo, json);
+  }
 
-  // UserModel getUser() {
-  //   String data = _storage.read<String>(_userInfo) ?? '';
-  //   if (data.isNotEmpty) {
-  //     return UserModel.fromMap(jsonDecode(data));
-  //   } else {
-  //     return UserModel();
-  //   }
-  // }
+  UserModel getUser() {
+    String data = _storage.read<String>(_userInfo) ?? '';
+    if (data.isNotEmpty) {
+      return UserModel.fromMap(jsonDecode(data));
+    } else {
+      return UserModel();
+    }
+  }
 
   Future setBaseUrl({required String baseUrl}) async {
     await _storage.write(_baseUrl, baseUrl);
@@ -126,9 +129,9 @@ class DataStorage {
     await _storage.remove(_userInfo);
   }
 
-  // Future clearAllData() async {
-  //   await _storage.erase();
-  //   await GoogleSignIn().signOut();
-  //   await FacebookAuth.instance.logOut();
-  // }
+  Future clearAllData() async {
+    await _storage.erase();
+    // await GoogleSignIn().signOut();
+    // await FacebookAuth.instance.logOut();
+  }
 }

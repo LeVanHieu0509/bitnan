@@ -21,8 +21,10 @@ class BBConfig {
   }
 
   bool get isProd => base_url == prodServer;
+
   // FirebaseRemoteConfig get _frc => FirebaseRemoteConfig.instance;
-  // Future<void> refresh() => isProd ? _frc.fetchAndActivate() : Future.value();
+  Future<void> refresh() => Future.value();
+  bool get system_maintain => false;
 
   // bool get system_maintain => isProd ? _frc.getBool(SYSTEM_MAINTAIN) : false;
   // String get support_fanpage => isProd ? _frc.getString(SUPPORT_FANPAGE) : '';

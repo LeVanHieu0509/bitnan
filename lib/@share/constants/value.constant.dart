@@ -4,15 +4,18 @@ const kApiVersion = 'X-API-Version';
 const kAuthorizationGame = 'X-Authentication-Token';
 
 /// Is running with Production or UAT API
-const kIsEnvProd = String.fromEnvironment('BITBACK_ENV') == 'PROD';
+const kIsEnvProd = String.fromEnvironment('BITBACK_ENV') == 'UAT';
 
 const kContentType = 'application/json; charset=utf-8';
 const kContentTypeMultipart = 'multipart/form-data';
 const kUrlVndc = 'https://signup.goonus.io/6277729707018590110';
 const kUrlGame = 'http://bitplay.bitback.community/';
 
-const prodServer = 'https://api.bitback.community/';
-const uatServer = 'https://api-uat.bitback.community/';
+// const prodServer = 'https://api.bitback.community/';
+// const uatServer = 'https://api-uat.bitback.community/';
+
+const prodServer = 'http://localhost:3000/';
+const uatServer = 'http://localhost:3000';
 
 const kDefaultHeightAlphabet = 14.0;
 const kTypeSignInApple = 'kTypeSignInApple';
@@ -302,5 +305,5 @@ const bitlotError = {
   'CANNOT_CLAIM_BUY_TICKET': 'Bạn đã hết lượt mua vé',
   'CANNOT_CLAIM_FREE_TICKET': 'Bạn đã hết lượt nhận vé miễn phí',
   'CANNOT_CLAIM_ADS_TICKET': 'Bạn đã hết lượt nhận vé thông qua xem quảng cáo',
-  'BALANCE_CANNOT_CLAIM_LUCK_NUMBER': 'Bạn không đủ BBC để mua vé'
+  'BALANCE_CANNOT_CLAIM_LUCK_NUMBER': 'Bạn không đủ BBC để mua vé',
 };

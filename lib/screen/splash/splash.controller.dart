@@ -71,6 +71,7 @@ class SplashController extends GetxController {
 
     // final isInReview = await BBConfig.instance.isInReviewApple();
     // final pass = _storage.getPasscodeInReview();
+
     final pass = 2;
     if (pass == 1) {
       showLoading();
