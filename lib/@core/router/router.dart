@@ -1,9 +1,11 @@
+import 'package:bitnan/@core/binding/main.binding.dart';
 import 'package:bitnan/@core/binding/signIn.binding.dart';
 import 'package:bitnan/@core/binding/signUp.binding.dart';
 import 'package:bitnan/@core/binding/splash.binding.dart';
 import 'package:bitnan/@core/router/pages.dart';
 import 'package:bitnan/screen/auth/signIn/signIn.screen.dart';
 import 'package:bitnan/screen/auth/signUp/signUp.screen.dart';
+import 'package:bitnan/screen/main/main.screen.dart';
 import 'package:bitnan/screen/splash/splash.screen.dart';
 import 'package:get/get.dart';
 
@@ -15,5 +17,6 @@ class Routers {
     _initPage(ROUTER_SPLASH, () => const SplashScreen(), SplashBinding()),
     _initPage(ROUTER_SIGN_IN, () => const SignInScreen(), SignInBinding()),
     _initPage(ROUTER_SIGN_UP, () => const SignUpScreen(), SignUpBinding()),
+    _initPage(ROUTER_MAIN_TAB, () => const MainScreen(), MainBinding()),
   ];
 }
