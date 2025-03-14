@@ -354,3 +354,141 @@ _fetchRemoteConfig() async {
     print('Error: ${e.toString()}');
   }
 }
+
+Future<void> deleteFile(String image) async {
+  try {
+    final dir = Directory(image);
+    dir.deleteSync(recursive: true);
+  } catch (e) {
+    /* ignored */
+  }
+}
+
+bool validEmail(String value) {
+  bool emailValid = RegExp(
+    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+  ).hasMatch(value);
+  return emailValid;
+}
+
+bool validText(String value) {
+  bool textValid = RegExp(r'^[a-zA-Z0-9]+$').hasMatch(value);
+  return textValid;
+}
+
+String validateMyInput(String value) {
+  RegExp regex = RegExp(r'^(?=\D*(?:\d\D*){1,12}$)\d+(?:\.\d{1,4})?$');
+  if (!regex.hasMatch(value)) {
+    return getLocalize(kIncorrectSatoshi);
+  } else {
+    return '';
+  }
+}
+
+String validatePriceGame(int value) {
+  RegExp regex = RegExp(r'^(?=\D*(?:\d\D*){1,12}$)\d+(?:\.\d{1,4})?$');
+  if (!regex.hasMatch(value.toString())) {
+    return getLocalize(kCheckSatoshi);
+  } else {
+    return '';
+  }
+}
+
+String validatePrice(String value) {
+  RegExp regex = RegExp(r'^(?=\D*(?:\d\D*){1,12}$)\d+(?:\.\d{1,4})?$');
+  if (!regex.hasMatch(value)) {
+    return getLocalize(kIncorrectSatoshi);
+  } else if (value.length < 1000) {
+    return 'Số Sat tối thiểu  1000';
+  } else if (value.length > 100000000000) {
+    return 'Số Sat không vượt quá 100000000000';
+  } else {
+    return '';
+  }
+}
+
+String replacePhone(String phone) {
+  return phone.replaceAll('+84', '0');
+}
+
+bool validateMobile(String value) {
+  String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+  RegExp regExp = RegExp(pattern);
+  if (!regExp.hasMatch(value)) {
+    return false;
+  }
+  return true;
+}
+
+String formatPhoneNumber({required String content}) => content.replaceAllMapped(
+  RegExp(r'(\d{4})(\d{3})(\d+)'),
+  (Match m) => '${m[1]} ${m[2]} ${m[3]}',
+);
+
+String moneyFormat(String price) {
+  if (price.length > 2) {
+    var value = price;
+    value = value.replaceAll(RegExp(r'\D'), '');
+    value = value.replaceAll(RegExp(r'\B(?=(\d{3})+(?!\d))'), ',');
+    return value;
+  }
+  return price;
+}
+
+String getPrice(num? price) {
+  if (price == null) return '';
+  String value = price.round().toString();
+  num sum = 0;
+  if (value.length <= 5) {
+    return moneyFormat(value);
+  } else if (value.length == 6) {
+    sum = price / 100000 * 100;
+    return '${sum.toStringAsFixed(0)}k';
+  } else if (value.length == 7 || value.length == 8 || value.length == 9) {
+    sum = price / 100000000 * 100;
+    return '${sum.toStringAsFixed(0)}M';
+  } else {
+    sum = price / 1000000000;
+    return '${sum.toStringAsFixed(0)}B';
+  }
+}
+
+String moneyFormatSAT(num? price) {
+  if (price == null) return '-';
+  if (price < 1) {
+    return '$price';
+  } else {
+    final numberFormat = NumberFormat('#,###', 'en_US');
+    return numberFormat.format(price);
+  }
+}
+
+String formatCreditNumber({required String content}) =>
+    content.replaceAllMapped(
+      RegExp(r'(\d{4})(\d{4})(\d{4})(\d+)'),
+      (Match m) => '${m[1]} •••• •••• ${m[4]}',
+    );
+
+String formatTrustPayCard({required String content}) =>
+    content.replaceAllMapped(
+      RegExp(r'(\d{4})(\d{4})(\d{4})(\d+)'),
+      (Match m) => '${m[1]} ${m[2]} ${m[3]} ${m[4]}',
+    );
+
+String formatTimeNotification({String? time}) => DateFormat(
+  'dd.MM.yyyy - HH:mm',
+).format(DateTime.parse(time ?? '').toLocal());
+
+String formatTimeHistory(String? time) => DateFormat(
+  'dd/MM/yyyy - HH:mm',
+).format(DateTime.parse(time ?? '').toLocal());
+
+/// TODO: revise this logic: `start` not used
+int parseDatetimeUtc(String start, String end) {
+  return _dateTime(end).millisecondsSinceEpoch -
+      DateTime.now().millisecondsSinceEpoch;
+}
+
+DateTime _dateTime(String date) {
+  return DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(date, true);
+}

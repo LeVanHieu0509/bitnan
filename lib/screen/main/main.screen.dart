@@ -60,21 +60,21 @@ class MainScreen extends GetWidget<MainController> {
         icon: _icon(MyImage.ic_tabbar_intro),
         activeIcon: _icon(MyImage.ic_tabbar_intro_selected, true),
       ),
-      // BottomNavigationBarItem(
-      //   label: getLocalize(kGiftBag),
-      //   icon: _icon(MyImage.ic_tabbar_gift_bag),
-      //   activeIcon: _icon(MyImage.ic_tabbar_gift_bag_selected, true),
-      // ),
-      // BottomNavigationBarItem(
-      //   label: getLocalize(kRanking),
-      //   icon: _icon(MyImage.ic_rank_black),
-      //   activeIcon: _icon(MyImage.ic_rank_selected, true),
-      // ),
-      // BottomNavigationBarItem(
-      //   label: getLocalize(kTabbarLaunchpad),
-      //   icon: _icon(MyImage.ic_tabbar_launchpad),
-      //   activeIcon: _icon(MyImage.ic_tabbar_launchpad_selected, true),
-      // ),
+      BottomNavigationBarItem(
+        label: getLocalize(kGiftBag),
+        icon: _icon(MyImage.ic_tabbar_gift_bag),
+        activeIcon: _icon(MyImage.ic_tabbar_gift_bag_selected, true),
+      ),
+      BottomNavigationBarItem(
+        label: getLocalize(kRanking),
+        icon: _icon(MyImage.ic_rank_black),
+        activeIcon: _icon(MyImage.ic_rank_selected, true),
+      ),
+      BottomNavigationBarItem(
+        label: getLocalize(kTabbarLaunchpad),
+        icon: _icon(MyImage.ic_tabbar_launchpad),
+        activeIcon: _icon(MyImage.ic_tabbar_launchpad_selected, true),
+      ),
     ],
   );
 
