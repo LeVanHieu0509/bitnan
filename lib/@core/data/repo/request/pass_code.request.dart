@@ -7,8 +7,8 @@ class PassCodeRequest {
   PassCodeRequest(this.passCode, this.token);
 
   Map<String, dynamic> toMap() => {
-    // 'passcode': EncryptPass.generateMd5(passCode),
-    'passcode': passCode,
+    'passcode': EncryptPass.generateMd5(passCode),
+    // 'passcode': passCode,
     if (token.isNotEmpty) 'token': token,
   };
 }

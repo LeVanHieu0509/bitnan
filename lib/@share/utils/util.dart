@@ -24,6 +24,8 @@ getLocalize(String key, {List<String>? args}) =>
     args != null ? key.trArgs(args) : key.tr;
 goBack({dynamic argument}) => Get.back(result: argument);
 getArgument() => Get.arguments;
+hideKeyboard() => FocusScope.of(Get.overlayContext!).unfocus();
+
 Future? goTo({required String screen, dynamic argument}) =>
     Get.toNamed(screen, arguments: argument);
 widthScreen(double? percent) =>

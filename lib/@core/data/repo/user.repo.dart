@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bitnan/@core/data/api/upload.api.dart';
 import 'package:bitnan/@core/data/api/user.api.dart';
+import 'package:bitnan/@core/data/repo/model/referral.model.dart';
 import 'package:bitnan/@core/data/repo/model/request_change_pass.dart';
 import 'package:bitnan/@core/data/repo/model/token.model.dart';
 import 'package:bitnan/@core/data/repo/model/user.model.dart';
@@ -232,5 +233,12 @@ class UserRepo {
   Future<BaseResponse> updateKYC(int kycStatus, String userId) async {
     var res = await userApi.updateKYC(kycStatus, userId);
     return res..data = res.status == kSuccessApi ? res.data : null;
+  }
+
+  Future<BaseResponse> getCashBackIntroduce() async {
+    var res = await userApi.getCashBackIntroduce();
+    return res
+      ..data =
+          res.status == kSuccessApi ? ReferralModel.fromJson(res.data) : null;
   }
 }

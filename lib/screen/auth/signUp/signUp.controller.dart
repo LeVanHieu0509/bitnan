@@ -123,11 +123,11 @@ class SignUpController extends GetxController {
       print("signInGoogle");
 
       await signInAuth(
-        token: "ạhduasgdjhadhajsgd",
+        token: "hgashdghhduasgdjhadhajs123gd1211212312123232312",
         type: kApiSignInGoogle,
-        fullName: "LeVanH",
+        fullName: "LeVanH111",
         url: "https://levanhieupro.com",
-        email: "levanhieu@pro.com",
+        email: "levanhieu14@pro.com",
       );
     } catch (e) {
       showAlert(title: 'Lỗi', content: e.toString());
