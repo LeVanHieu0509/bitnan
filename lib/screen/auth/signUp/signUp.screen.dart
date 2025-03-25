@@ -12,25 +12,33 @@ import 'package:bitnan/screen/auth/signUp/signUp.controller.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// SignUpScreen kế thừa từ GetView<SignUpController>,
+// nghĩa là màn hình này sẽ tự động truy cập controller SignUpController mà không cần phải gọi Get.find().
 class SignUpScreen extends GetView<SignUpController> {
+  // GetView giúp đơn giản hóa việc kết nối controller và widget trong GetX.
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // Đây là một widget tùy chỉnh bao bọc toàn bộ giao diện để đảm bảo rằng nó sẽ hoạt động tốt trên các thiết bị với SafeArea
+    // (khoảng an toàn cho UI để tránh bị che bởi các yếu tố hệ thống như notch, status bar, hoặc navigation bar).
     return CustomSafeView(
       top: false,
       child: Container(
         color: MyColor.colorContainer,
         child: SafeArea(
           child:
+              // Sử dụng VelocityX để tạo một Column với các widget xếp theo chiều dọc.
               VStack(
                 [
                   SizedBox(height: 32.h),
                   //TODO hide ToggleLang
                   //ToggleLang(),
                   Expanded(child: _itemLogo()),
+                  // Dùng để nhận các hành động tap và long press trên văn bản.
                   GestureDetector(
                     onTap: () => controller.countPress++,
+                    // onLongPress sẽ gọi specialEvent() trong controller khi người dùng nhấn lâu
                     onLongPress: () => controller.specialEvent(),
                     child: Text(
                       getLocalize(kLoginWith),
@@ -56,6 +64,7 @@ class SignUpScreen extends GetView<SignUpController> {
     );
   }
 
+  // Hiển thị các nút đăng nhập với Apple ID, Google, và Facebook
   Widget _buildListItemLogin() {
     if (Platform.isIOS) {
       return Row(
@@ -106,6 +115,7 @@ class SignUpScreen extends GetView<SignUpController> {
     );
   }
 
+  // Hiển thị logo của ứng dụng từ MyImage.logo_bit_back. Sử dụng VelocityX để căn giữa logo trong màn hình.
   _itemLogo() =>
       VxBox(
         child: Image.asset(MyImage.logo_bit_back, height: 80.w, width: 80.w),
@@ -129,3 +139,12 @@ class SignUpScreen extends GetView<SignUpController> {
     await controller.signInFacebook();
   }
 }
+
+/*
+Tóm tắt:
+  1. SignUpScreen sử dụng GetX để truy cập và điều khiển trạng thái của SignUpController.
+  2. VStack và VelocityX được sử dụng để sắp xếp các widget theo chiều dọc.
+  3. Các nền tảng xác thực như Apple ID, Google, và Facebook được tích hợp vào giao diện với các biểu tượng đăng nhập.
+  4. Các sự kiện tap và long press được xử lý trong các widget như GestureDetector.
+  5. CustomSafeView bảo vệ giao diện khỏi các phần bị che khuất do các yếu tố hệ thống như status bar.
+ */
