@@ -14,29 +14,42 @@ import 'package:velocity_x/velocity_x.dart';
 
 class OtpController extends GetxController {
   TextEditingController textEditingController = TextEditingController(text: '');
+
+  // Biến này kiểm soát việc hiển thị nút "Gửi lại OTP"
   var isResend = false.obs;
-  Timer? timer;
-  var error = ''.obs;
-  var timeText = '0:0'.obs;
-  var start = kMaxTimeOutOtpEmail;
+  Timer? timer; //  Được sử dụng để tạo đồng hồ đếm ngược cho việc gửi lại OTP.
+  var error = ''.obs; // Biến lưu thông báo lỗi (nếu có).
+  var timeText =
+      '0:0'.obs; // Lưu trữ thời gian đếm ngược (hiển thị trên giao diện).
+  var start = kMaxTimeOutOtpEmail; // Thời gian đếm ngược ban đầu cho OTP.
   var title = ''.obs;
   var content = ''.obs;
-  var iD = ''.obs;
-  var otp = ''.obs;
-  var token = '';
+  var iD = ''.obs; // Biến lưu trữ phần email đã bị ẩn đi một phần cho bảo mật.
+  var otp = ''.obs; // Biến lưu mã OTP nhận được từ server.
+  var token = ''; // Token nhận được từ server sau khi yêu cầu OTP.
   var userRepo = Get.find<UserRepo>();
   // var transferRepo = Get.find<TransferRewardRepo>();
   // UserModel model;
+
+  // Lưu yêu cầu xác thực OTP.
   var authCheckRequest = AuthCheckRequest().obs;
+
+  // Đối tượng lưu thông tin đăng ký người dùng (email, token, v.v.)
   late final SignUpRequest signUpRequest;
-  late final FocusNode inputNode;
+  late final FocusNode inputNode; //FocusNode cho trường nhập OTP.
 
   @override
   void onInit() {
     super.onInit();
     inputNode = FocusNode();
+
+    // được lấy từ đối tượng trước đó được truyền vào (thông qua getArgument()).
     signUpRequest = getArgument();
+
+    //  là mã token email từ signUpRequest (dùng trong yêu cầu OTP).
     token = signUpRequest.tokenEmail ?? '';
+
+    // Phần email trước dấu "@" được ẩn để bảo mật (ví dụ: ***@gmail.com).
     int length = signUpRequest.email.indexOf('@');
     if (length == 1) {
       iD.value = signUpRequest.email.replaceRange(
@@ -65,6 +78,8 @@ class OtpController extends GetxController {
     super.onClose();
   }
 
+  // Tại đây, phương thức getOTP() sẽ được gọi để bắt đầu quá trình yêu cầu OTP,
+  // và inputNode sẽ được focus để người dùng có thể nhập OTP ngay lập tức.
   @override
   void onReady() {
     getOTP();
@@ -73,20 +88,24 @@ class OtpController extends GetxController {
   }
 
   Future getOTP() async {
+    // getOTP() gọi startTimer() để bắt đầu đếm ngược thời gian cho phép gửi lại mã OTP.
     startTimer();
   }
 
   void startTimer() {
+    // Phương thức này khởi tạo một Timer để đếm ngược từng giây
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (start == 0) {
         timer.cancel();
         isResend.value = true;
       } else {
+        // được gọi mỗi giây để chuyển đổi thời gian còn lại thành chuỗi hiển thị (ví dụ: "2:05").
         _convertTimeToText();
       }
     });
   }
 
+  // Dọn sạch trường OTP và xóa lỗi nếu có.
   void _clearOtp() {
     textEditingController.text = '';
     setError(clear: true);
