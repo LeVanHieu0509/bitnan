@@ -13,6 +13,11 @@ import 'package:bitnan/screen/auth/signUp/userInfo/user_info.controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+/*
+  UserInfoScreen là một stateless widget kế thừa từ GetWidget<UserInfoController>. 
+  Điều này cho phép màn hình này tự động kết nối với UserInfoController mà không cần phải gọi Get.find().
+*/
+
 class UserInfoScreen extends GetWidget<UserInfoController> {
   const UserInfoScreen({Key? key}) : super(key: key);
 
@@ -49,6 +54,7 @@ class UserInfoScreen extends GetWidget<UserInfoController> {
             ),
             40.h.heightBox,
             Obx(
+              // Được sử dụng để làm cho widget TextFieldUnderline tự động cập nhật khi controller.fullName.value thay đổi.
               () => TextFieldUnderline(
                 hintText: kFullName,
                 text: controller.fullName.value,
@@ -57,13 +63,15 @@ class UserInfoScreen extends GetWidget<UserInfoController> {
                   if (!validText(value) && value.contains(' ')) {
                     return;
                   }
+
+                  // Widget tùy chỉnh cho trường nhập họ tên. Khi người dùng nhập, giá trị sẽ được cập nhật vào controller.fullName.
                   controller.fullName.value = value;
                 },
                 iconLeft: MyImage.ic_profile,
               ),
             ),
             const Spacer(),
-            _buttonSubmit(),
+            _buttonSubmit(), // Gọi phương thức này để tạo nút "Next" khi người dùng hoàn thành việc nhập thông tin.
           ],
         ),
       ),
@@ -71,10 +79,13 @@ class UserInfoScreen extends GetWidget<UserInfoController> {
   }
 
   _buttonSubmit() =>
+      // Tạo hiệu ứng khi người dùng nhấn vào nút "Next".
       InkWell(
         splashColor: Vx.white,
         highlightColor: Vx.white,
         onTap: () {
+          //  Khi người dùng nhấn nút, nếu fullName không rỗng,
+          // thông tin sẽ được lưu vào signUpRequest.fullName và điều hướng người dùng đến màn hình ROUTER_INPUT_EMAIL.
           if (controller.fullName.value.isNotEmpty) {
             controller.signUpRequest.fullName = controller.fullName.value;
             goTo(
@@ -84,12 +95,14 @@ class UserInfoScreen extends GetWidget<UserInfoController> {
           }
         },
         child: Obx(
+          // Đảm bảo rằng giao diện nút sẽ được cập nhật khi controller.fullName.value thay đổi.
           () => Container(
             height: 48.h,
             width: 263.w,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4.r),
+              // Nút được tạo với hiệu ứng gradient và kiểu chữ Next.
               gradient: LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
@@ -114,3 +127,12 @@ class UserInfoScreen extends GetWidget<UserInfoController> {
         ),
       ).centered();
 }
+
+/*
+Tóm tắt về màn hình UserInfoScreen:
+1. UserInfoScreen là màn hình nhập thông tin người dùng (họ tên) trong quá trình đăng ký tài khoản.
+2. TextFieldUnderline cho phép người dùng nhập họ tên với sự hỗ trợ cập nhật giá trị trong controller.fullName.
+3. _buttonSubmit() là nút "Next", sẽ kiểm tra xem người dùng đã nhập thông tin hợp lệ chưa và sau đó chuyển đến màn hình nhập email.
+4. GetX được sử dụng để quản lý trạng thái và dữ liệu người dùng, 
+bao gồm việc lưu giá trị vào signUpRequest và điều hướng đến các màn hình tiếp theo.
+ */
