@@ -25,7 +25,7 @@ getLocalize(String key, {List<String>? args}) =>
 goBack({dynamic argument}) => Get.back(result: argument);
 getArgument() => Get.arguments;
 hideKeyboard() => FocusScope.of(Get.overlayContext!).unfocus();
-
+spaceHeight(double value) => SizedBox(height: value);
 Future? goTo({required String screen, dynamic argument}) =>
     Get.toNamed(screen, arguments: argument);
 widthScreen(double? percent) =>
@@ -493,4 +493,70 @@ int parseDatetimeUtc(String start, String end) {
 
 DateTime _dateTime(String date) {
   return DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(date, true);
+}
+
+showNewFeature() {
+  showModalBottomSheet(
+    context: Get.context!,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(4.r)),
+    ),
+    clipBehavior: Clip.antiAliasWithSaveLayer,
+    builder: (_) {
+      return Container(
+        color: MyColor.white,
+        height: 375.h,
+        child: Column(
+          children: [
+            Container(
+              height: 3.h,
+              width: 64.w,
+              margin: EdgeInsets.only(top: 16.h, bottom: 28.h),
+              decoration: BoxDecoration(color: MyColor.gray.withOpacity(0.15)),
+            ),
+            ImageCaches(
+              url: MyImage.ic_system_maintain,
+              height: 90.h,
+              width: 174.w,
+            ),
+            32.h.heightBox,
+            Text(
+              getLocalize(kNewFeature),
+              textAlign: TextAlign.center,
+              style: MyStyle.typeRegular.copyWith(fontSize: 16.sp),
+            ),
+            spaceHeight(4.h),
+            Text(
+              getLocalize(kPleaseBackCome),
+              textAlign: TextAlign.center,
+              style: MyStyle.typeRegular.copyWith(fontSize: 16.sp),
+            ),
+            const Spacer(),
+            InkWell(
+              splashColor: Vx.white,
+              highlightColor: Vx.white,
+              onTap: () {
+                goBack();
+              },
+              child: Container(
+                height: 48.h,
+                width: Get.width,
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(horizontal: 56.w),
+                decoration: getDecoration(),
+                child: Text(
+                  'OK',
+                  style: MyStyle.typeBold.copyWith(
+                    color: MyColor.white,
+                    fontSize: 16.sp,
+                  ),
+                ),
+              ),
+            ),
+            56.h.heightBox,
+          ],
+        ),
+      );
+    },
+  );
 }

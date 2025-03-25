@@ -2,6 +2,7 @@ import 'package:biometric_storage/biometric_storage.dart';
 import 'package:bitnan/@core/data/repo/model/biometric_type.model.dart';
 import 'package:bitnan/@core/data/repo/model/config_bio.model.dart';
 import 'package:bitnan/@core/data/repo/model/user_response.dart';
+import 'package:bitnan/screen/main/person/person.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -268,18 +269,18 @@ class SignInController extends GetxController {
   // actionAuthenticate(): Sau khi xác thực thành công,
   // phương thức này sẽ quay lại màn hình trước (hoặc thực hiện các hành động xác thực khác).
   Future actionAuthenticate() async {
-    // PersonController controller = Get.find();
-    // if (configBio.value.enable) {
-    //   _localStorage.deleteAll();
-    //   controller.actionAllowFaceId(false);
-    // } else {
-    //   _localStorage.write(
-    //     key: 'passcode',
-    //     value: passWord.value,
-    //     aOptions: const AndroidOptions(encryptedSharedPreferences: false),
-    //   );
-    //   controller.actionAllowFaceId(true);
-    // }
+    PersonController controller = Get.find();
+    if (configBio.value.enable) {
+      _localStorage.deleteAll();
+      controller.actionAllowFaceId(false);
+    } else {
+      _localStorage.write(
+        key: 'passcode',
+        value: passWord.value,
+        aOptions: AndroidOptions(),
+      );
+      controller.actionAllowFaceId(true);
+    }
     goBack();
   }
 

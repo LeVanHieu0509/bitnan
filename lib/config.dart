@@ -27,13 +27,13 @@ class BBConfig {
   bool get system_maintain => false;
 
   // bool get system_maintain => isProd ? _frc.getBool(SYSTEM_MAINTAIN) : false;
-  // String get support_fanpage => isProd ? _frc.getString(SUPPORT_FANPAGE) : '';
-  // String get support_zalo => isProd ? _frc.getString(SUPPORT_ZALO) : '';
-  // String get support_telegram => isProd ? _frc.getString(SUPPORT_TELE) : '';
-  // String get support_twitter => isProd ? _frc.getString(SUPPORT_TW) : '';
-  // String get support_youtube => isProd ? _frc.getString(SUPPORT_YT) : '';
-  // String get support_tiktok => isProd ? _frc.getString(SUPPORT_TT) : '';
-  // String get support_browser => isProd ? _frc.getString(SUPPORT_BR) : '';
+  String get support_fanpage => '';
+  String get support_zalo => '';
+  String get support_telegram => '';
+  String get support_twitter => '';
+  String get support_youtube => '';
+  String get support_tiktok => '';
+  String get support_browser => '';
 
   // String get minimum_version => isProd
   //     ? Platform.isIOS
@@ -65,8 +65,10 @@ class BBConfig {
   String get ad_unit_id =>
       Platform.isAndroid ? android_ad_unit_id : ios_ad_unit_id;
 
-  // Future<bool> isInReviewApple() async {
-  //   final packageInfo = await PackageInfo.fromPlatform();
-  //   return apple_review_version == packageInfo.version;
-  // }
+  Future<bool> isInReviewApple() async {
+    // final packageInfo = await PackageInfo.fromPlatform();
+    // return apple_review_version == packageInfo.version;
+
+    return false;
+  }
 }
