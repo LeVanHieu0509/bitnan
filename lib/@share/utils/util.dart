@@ -26,6 +26,8 @@ goBack({dynamic argument}) => Get.back(result: argument);
 getArgument() => Get.arguments;
 hideKeyboard() => FocusScope.of(Get.overlayContext!).unfocus();
 spaceHeight(double value) => SizedBox(height: value);
+heightScreen(double? percent) =>
+    percent != null ? (Get.height * percent) / 100 : Get.height;
 Future? goTo({required String screen, dynamic argument}) =>
     Get.toNamed(screen, arguments: argument);
 widthScreen(double? percent) =>
@@ -537,6 +539,118 @@ showNewFeature() {
               highlightColor: Vx.white,
               onTap: () {
                 goBack();
+              },
+              child: Container(
+                height: 48.h,
+                width: Get.width,
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(horizontal: 56.w),
+                decoration: getDecoration(),
+                child: Text(
+                  'OK',
+                  style: MyStyle.typeBold.copyWith(
+                    color: MyColor.white,
+                    fontSize: 16.sp,
+                  ),
+                ),
+              ),
+            ),
+            56.h.heightBox,
+          ],
+        ),
+      );
+    },
+  );
+}
+
+checkUserKyc({
+  String? name,
+  int? status,
+  Function(bool isVerifyPhone)? action,
+}) {
+  if (status == kKycStatus) {
+    action?.call(false);
+  } else {
+    action?.call(true);
+  }
+}
+
+Future<void> showModalSheetVerifyPhone({
+  Function(String phone)? action,
+  Function? otherAction,
+}) {
+  // HomeController controller = Get.find();
+  // int reward = controller.getReward;
+  // if (controller.focusPhone.hasFocus) {
+  //   controller.focusPhone.unfocus();
+  // }
+  return showModalBottomSheet(
+    context: Get.context!,
+    isDismissible: false,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(4.r)),
+    ),
+    clipBehavior: Clip.antiAliasWithSaveLayer,
+    builder: (_) {
+      return Container(
+        color: MyColor.white,
+        height: 375.h,
+        child: Column(
+          children: [
+            Container(
+              height: 3.h,
+              width: 64.w,
+              margin: EdgeInsets.only(top: 16.h, bottom: 28.h),
+              decoration: BoxDecoration(color: MyColor.gray.withOpacity(0.15)),
+            ),
+            ImageCaches(
+              url: MyImage.ic_error_square,
+              height: 64.w,
+              width: 64.w,
+            ),
+            32.h.heightBox,
+            Text(
+              getLocalize(kTitleVerifyPhone),
+              textAlign: TextAlign.center,
+              style: MyStyle.typeRegular.copyWith(fontSize: 16.sp),
+            ),
+            8.h.heightBox,
+            RichText(
+              text: TextSpan(
+                text: getLocalize(kVerifyPhoneReward),
+                style: MyStyle.typeRegular.copyWith(fontSize: 16.sp),
+                children: [
+                  // TextSpan(
+                  //   text: ' $reward SAT',
+                  //   style: MyStyle.typeBold.copyWith(
+                  //     fontSize: 16.sp,
+                  //     color: const Color(0xFFFF005D),
+                  //   ),
+                  // ),
+                ],
+              ),
+            ),
+            8.h.heightBox,
+            Text(
+              getLocalize(kDescriptionVerify),
+              textAlign: TextAlign.center,
+              style: MyStyle.typeRegular.copyWith(fontSize: 16.sp),
+            ),
+            const Spacer(),
+            InkWell(
+              splashColor: Vx.white,
+              highlightColor: Vx.white,
+              onTap: () {
+                if (otherAction != null) {
+                  otherAction();
+                } else {
+                  goBack();
+                  // verifyPhone(
+                  //   reward: reward,
+                  //   controller: controller,
+                  //   action: action,
+                  // );
+                }
               },
               child: Container(
                 height: 48.h,

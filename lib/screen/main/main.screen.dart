@@ -1,3 +1,5 @@
+import 'package:bitnan/@share/widget/container_empty.dart';
+import 'package:bitnan/screen/main/home/summary/summary.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bitnan/@share/constants/language.constant.dart';
@@ -23,8 +25,10 @@ class MainScreen extends GetWidget<MainController> {
           // const SummaryScreen(),
           // ConnectScreen(),
           // // const GiftBagScreen(),
-          // const ContainerEmpty(),
-          // const ContainerEmpty(),
+          const ContainerEmpty(),
+          const SummaryScreen(),
+          const ContainerEmpty(),
+          const ContainerEmpty(),
         ],
       ),
       resizeToAvoidBottomInset: false,
@@ -65,16 +69,16 @@ class MainScreen extends GetWidget<MainController> {
         icon: _icon(MyImage.ic_tabbar_gift_bag),
         activeIcon: _icon(MyImage.ic_tabbar_gift_bag_selected, true),
       ),
-      BottomNavigationBarItem(
-        label: getLocalize(kRanking),
-        icon: _icon(MyImage.ic_rank_black),
-        activeIcon: _icon(MyImage.ic_rank_selected, true),
-      ),
-      BottomNavigationBarItem(
-        label: getLocalize(kTabbarLaunchpad),
-        icon: _icon(MyImage.ic_tabbar_launchpad),
-        activeIcon: _icon(MyImage.ic_tabbar_launchpad_selected, true),
-      ),
+      // BottomNavigationBarItem(
+      //   label: getLocalize(kRanking),
+      //   icon: _icon(MyImage.ic_rank_black),
+      //   activeIcon: _icon(MyImage.ic_rank_selected, true),
+      // ),
+      // BottomNavigationBarItem(
+      //   label: getLocalize(kTabbarLaunchpad),
+      //   icon: _icon(MyImage.ic_tabbar_launchpad),
+      //   activeIcon: _icon(MyImage.ic_tabbar_launchpad_selected, true),
+      // ),
     ],
   );
 

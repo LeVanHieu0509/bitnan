@@ -1,3 +1,4 @@
+import 'package:bitnan/screen/main/home/summary/summary.controller.dart';
 import 'package:get/get.dart';
 
 import 'package:bitnan/screen/main/main.controller.dart';
@@ -13,6 +14,6 @@ class MainBinding extends Bindings {
     // Get.lazyPut(() => BitPlayController());
     // Get.lazyPut(() => GiftBagController());
     // Get.lazyPut(() => LoginPhoneController());
-    // Get.lazyPut(() => SummaryController());
+    Get.lazyPut(() => SummaryController());
   }
 }
