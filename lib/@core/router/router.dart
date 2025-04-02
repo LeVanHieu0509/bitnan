@@ -3,6 +3,7 @@ import 'package:bitnan/@core/binding/input_email.binding.dart';
 import 'package:bitnan/@core/binding/main.binding.dart';
 import 'package:bitnan/@core/binding/otp.binding.dart';
 import 'package:bitnan/@core/binding/referral_reward.binding.dart';
+import 'package:bitnan/@core/binding/select_transfer.binding.dart';
 import 'package:bitnan/@core/binding/signIn.binding.dart';
 import 'package:bitnan/@core/binding/signUp.binding.dart';
 import 'package:bitnan/@core/binding/splash.binding.dart';
@@ -16,6 +17,7 @@ import 'package:bitnan/screen/auth/signUp/password/create_password.screen.dart';
 import 'package:bitnan/screen/auth/signUp/referralewards/referral_rewards.screen.dart';
 import 'package:bitnan/screen/auth/signUp/signUp.screen.dart';
 import 'package:bitnan/screen/auth/signUp/userInfo/user_info.screen.dart';
+import 'package:bitnan/screen/main/home/select_method_transfer/select_transfer.screen.dart';
 import 'package:bitnan/screen/main/home/summary/summary.screen.dart';
 import 'package:bitnan/screen/main/main.screen.dart';
 import 'package:bitnan/screen/splash/splash.screen.dart';
@@ -52,5 +54,10 @@ class Routers {
       CreatePassWordBinding(),
     ),
     _initPage(ROUTER_SUMMARY, () => const SummaryScreen(), SummaryBinding()),
+    _initPage(
+      ROUTER_SELECT_TRANSFER,
+      () => const SelectTransferScreen(),
+      SelectTransferBinding(),
+    ),
   ];
 }

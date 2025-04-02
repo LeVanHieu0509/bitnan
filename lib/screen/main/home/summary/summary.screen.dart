@@ -120,6 +120,8 @@ class SummaryScreen extends GetView<SummaryController> {
       },
       isShowHideMoney: controller.isShowHideMoney.value,
       handleClickByName: (title) {
+        print({"handleClickByName --> title": title});
+
         controller.getKYC(
           type:
               title == kRecharge

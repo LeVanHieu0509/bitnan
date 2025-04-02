@@ -98,14 +98,18 @@ class SummaryController extends GetxController {
     // ùy thuộc vào type, phương thức sẽ thực hiện các hành động khác nhau,
     // như kRecharge, kTranfersAmount, kExchangeAmount.
     bool withDrawable =
-        listConfig.where((element) => element.withDrawable == true).isNotEmpty;
+        listConfig.where((element) => element.withDrawable == false).isNotEmpty;
     bool exchangeAble =
-        listConfig.where((element) => element.exchangeAble == true).length > 1;
+        listConfig.where((element) => element.exchangeAble == false).length > 1;
+
     checkUserKyc(
       status: kKycStatus,
       // status: user.kycStatus,
       action: (bool isVerifyPhone) async {
         // Nếu người dùng chưa xác minh số điện thoại, gọi onVerifyPhone().
+
+        print("isVerifyPhone: ${isVerifyPhone}");
+
         if (isVerifyPhone) {
           onVerifyPhone();
         } else {
@@ -114,15 +118,18 @@ class SummaryController extends GetxController {
           } else if (type == kTranfersAmount && withDrawable) {
             _goto(ROUTER_SELECT_TRANSFER);
           } else if (type == kExchangeAmount && exchangeAble) {
-            await goTo(screen: ROUTER_EXCHANGE, argument: listCurrency)?.then((
-              value,
-            ) async {
-              if (value != null) {
-                await getCashBack();
-              }
-            });
+            // await goTo(screen: ROUTER_EXCHANGE, argument: listCurrency)?.then((
+            //   value,
+            // ) async {
+            //   if (value != null) {
+            //     await getCashBack();
+            //   }
+            // });
+            showAlert(content: '_exchangeAble');
           } else {
-            _gotoRecharge();
+            showAlert(content: '_gotoRecharge');
+
+            // _gotoRecharge();
           }
         }
       },

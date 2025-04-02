@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:bitnan/@core/router/pages.dart';
+import 'package:bitnan/@share/constants/key.error.dart';
 import 'package:bitnan/@share/constants/language.constant.dart';
 import 'package:bitnan/@share/constants/value.constant.dart';
 import 'package:bitnan/@share/widget/image/image.widget.dart';
@@ -36,6 +38,8 @@ Future<T?>? goToAndRemove<T>({required String screen, dynamic argument}) =>
     Get.offNamed<T>(screen, arguments: argument);
 Future<T?>? goToAndRemoveAll<T>({required String screen, dynamic argument}) =>
     Get.toNamed<T>(screen, arguments: argument);
+
+spaceWidth(double value) => SizedBox(width: value);
 
 Future<void> checkMaintenance({VoidCallback? callback}) async {
   print("checkMaintenance");
@@ -139,7 +143,94 @@ Future showAlert({
   VoidCallback? onConfirm,
   bool dismissible = true,
 }) async {
-  if (content == SYSTEM_MAINTAIN) {}
+  if (content == SYSTEM_MAINTAIN) {
+    showPopupMaintain(
+      action: () {
+        _fetchRemoteConfig();
+      },
+    );
+  } else if (content == CASHBACK_AVAILABLE_INVALID) {
+    // showPopupInsufficientError();
+  } else if (content == CASHBACK_AVAILABLE_INVALID_BBC) {
+    // showPopupBuyBBC();
+  } else if (content == PASSCODE_INVALID || content == INVALID_CREDENTIALS) {
+    showModalSheet(url: MyImage.ic_lock);
+  } else if (content == TOO_MANY_REQUESTS) {
+    showModalSheet(title: kTooManyRequest, message: kTryAgain);
+  } else if (content == INVALID_MIN_TIME_ON_MARKET) {
+    // showPopupSellEgg();
+  } else if (content == INVALID_KYC_STATUS) {
+    showModalSheetVerifyPhone();
+  } else {
+    if (content != null) {
+      showModalSheet(
+        title:
+            content == INVALID_MIN_TIME_ON_MARKET
+                ? kEggHatch
+                : title ?? kNotify,
+        message: getContent(content: content),
+        action: () {
+          if (content == ACCOUNT_TEMPORARILY_LOCKED &&
+              Get.currentRoute != ROUTER_SIGN_UP) {
+            goToAndRemoveAll(screen: ROUTER_SIGN_UP);
+          } else if (content == UNAUTHORIZED) {
+            goToAndRemoveAll(screen: ROUTER_SIGN_IN);
+          } else {
+            onConfirm?.call();
+          }
+        },
+      );
+    }
+  }
+}
+
+String getContent({required String content}) {
+  switch (content) {
+    case SOMETHING_WENT_WRONG:
+      return kSomeWentWrong;
+    case TOO_MANY_REQUESTS:
+      return kTooManyRequest;
+    case BODY_REQUIRED:
+      return kBodyRequire;
+    case ACCOUNT_INVALID:
+      return kAccountInvalid;
+    case PHONE_INVALID:
+      return kInvalidPhone;
+    case PHONE_EXIST:
+      return kPhoneExists;
+    case TYPE_REQUIRED:
+      return kTypeRequire;
+    case TYPE_INVALID:
+      return kTypeRequire;
+    case EMAIL_EXIST:
+      return kEmailExists;
+    case PASSCODE_INVALID:
+      return kPassCodeInvalid;
+    case FULL_NAME_REQUIRED:
+      return kFullNameRequire;
+    case TOKEN_INVALID:
+      return kTokenInvalid;
+    case OTP_INVALID:
+      return kOtpInvalid;
+    case EMAIL_INVALID:
+      return kEmailInvalid;
+    case CASHBACK_AVAILABLE_INVALID:
+      return kCashBackAvailable;
+    case INVALID_CREDENTIALS:
+      return kPassCodeInvalid;
+    case EGG_INVALID:
+      return kEggInvalid;
+    case BAD_REQUEST:
+      return kBadRequest;
+    case ACCOUNT_TEMPORARILY_LOCKED:
+      return kAccountLocked;
+    case UNAUTHORIZED:
+      return kUnAuthorized;
+    case QUANTITY_INVALID:
+      return kQuantityInvalid;
+    default:
+      return content;
+  }
 }
 
 getDecoration({BorderRadiusGeometry? borderRadius, double opacity = 1}) =>
