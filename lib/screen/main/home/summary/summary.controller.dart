@@ -55,12 +55,15 @@ class SummaryController extends GetxController {
     // Nó sẽ gọi checkInAppleReview() để kiểm tra xem ứng dụng
     // có đang trong quá trình Apple Review không,
     // và gọi getInfo() để lấy thông tin cần thiết từ các API.
+    print("1. initial summary");
     super.onInit();
     checkInAppleReview();
     getInfo();
   }
 
   Future getInfo() async {
+    print("3. initial getInfo");
+
     loading.value = true;
 
     await getMasterConfigCoin(); // Lấy cấu hình đồng tiền.
@@ -72,10 +75,13 @@ class SummaryController extends GetxController {
   }
 
   Future checkInAppleReview() async {
+    print("2. initial checkInAppleReview");
     isInReview.value = await BBConfig.instance.isInReviewApple();
   }
 
   Future getProfile() async {
+    print("5. initial getProfile");
+
     // Lấy thông tin người dùng từ API.
     BaseResponse res = await userRepo.getProfile();
 
@@ -144,6 +150,8 @@ class SummaryController extends GetxController {
 
   //  Phương thức này lấy thông tin tiền thưởng từ API và tính toán tổng giá trị tiền tệ (cashback).
   Future getCashBack() async {
+    print("7. initial getExchangeRate");
+
     valueTotal.value = 0;
     listCurrency.value = [];
 
@@ -211,6 +219,8 @@ class SummaryController extends GetxController {
   }
 
   Future getExchangeRate() async {
+    print("6. initial getExchangeRate");
+
     var res = await cashBackRepo.getExchangeRate();
     if (res != null) {
       if (res.status == kSuccessApi) {
@@ -226,6 +236,13 @@ class SummaryController extends GetxController {
 
   // Tính tỷ giá trung bình giữa bid và ask cho một loại tiền tệ.
   double getBIDByCode(String code) {
+    print({">>>>>>>getBIDByCode --> currency": code});
+    print({
+      ">>>>>>>getBIDByCode --> price":
+          ((double.parse(dataCashBack?['${code}VNDC']?.bid ?? '') +
+                  double.parse(dataCashBack?['${code}VNDC']?.ask ?? '')) /
+              2),
+    });
     return ((double.parse(dataCashBack?['${code}VNDC']?.bid ?? '') +
             double.parse(dataCashBack?['${code}VNDC']?.ask ?? '')) /
         2);
@@ -233,6 +250,7 @@ class SummaryController extends GetxController {
 
   // Lấy cấu hình tiền tệ từ API và chuyển đổi thành danh sách MasterConfigCoin.
   Future getMasterConfigCoin() async {
+    print("4. initial getMasterConfigCoin");
     var res = await cashBackRepo.getMasterConfigCoin();
     if (res.status == kSuccessApi) {
       listConfig = MasterConfigCoin.fromList(res.data);

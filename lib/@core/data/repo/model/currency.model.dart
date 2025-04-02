@@ -27,6 +27,18 @@ class CurrencyModel {
 
   static fromList(List list) =>
       list.map((e) => CurrencyModel.fromJson(e)).toList();
+
+  // Phương thức chuyển đối tượng thành JSON
+  Map<String, dynamic> toJson() {
+    return {
+      "amount": amount,
+      "pending": pending,
+      "currency": currency,
+      "currencyId": currencyId,
+      "config": config?.toJson(),
+      "swapConfig": swapConfig?.toJson(),
+    };
+  }
 }
 
 class ConfigModel {
@@ -38,4 +50,16 @@ class ConfigModel {
       min = js['min']?.toDouble() ?? 0,
       max = js['max']?.toDouble() ?? 0,
       minHold = js['minHold']?.toDouble() ?? 0;
+
+  // Phương thức chuyển đối tượng thành JSON
+
+  Map<String, dynamic> toJson() {
+    return {
+      "fee": fee,
+      "min": min,
+      "max": max,
+      "minHold": minHold,
+      "maxPerDay": maxPerDay,
+    };
+  }
 }

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:velocity_x/velocity_x.dart';
+import 'package:flutter/material.dart'; //  Thư viện chính của Flutter để tạo các widget giao diện người dùng
+import 'package:velocity_x/velocity_x.dart'; // Một thư viện giúp tối ưu hóa mã nguồn Flutter, đặc biệt là cho việc tạo layout và hoạt ảnh.
 
 import '../../@core/data/repo/model/currency.model.dart';
 import '../../resource/color.resource.dart';
@@ -7,9 +7,22 @@ import '../../resource/image.resource.dart';
 import '../utils/util.dart';
 import 'image/image.widget.dart';
 
+/*
+
+Đoạn mã này là một widget Flutter để hiển thị thông tin về một đơn vị tiền tệ (currency) trong ứng dụng. 
+Cụ thể, widget này sẽ hiển thị thông tin liên quan đến một đơn vị tiền tệ như biểu tượng, tên, và số tiền 
+(amount hoặc pending), và có thể thay đổi giao diện tùy thuộc vào việc nó có được chọn (isSelected) hay không. 
+*/
+
+// có nghĩa là widget này không có trạng thái thay đổi trong quá trình sử dụng.
 class ItemCurrency extends StatelessWidget {
+  // Đối tượng CurrencyModel, chứa dữ liệu về đơn vị tiền tệ như tên, số tiền, biểu tượng, v.v.
   final CurrencyModel model;
+
+  // Biến kiểu bool, xác định xem đơn vị tiền tệ có đang ở trạng thái chờ (pending) hay không.
   final bool isPending;
+
+  // Biến kiểu bool, xác định xem đơn vị tiền tệ này có được chọn hay không
   final bool isSelected;
 
   const ItemCurrency({
@@ -21,10 +34,18 @@ class ItemCurrency extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print({"model": model.toJson()});
+
+    // Nếu isSelected là true, nó sẽ gọi hàm _itemParentCurrency để tạo một widget có các đặc điểm dành cho mục được chọn, ngược lại,
+    // nó sẽ gọi hàm _itemCashBackDetail để tạo một widget cho mục không được chọn.
     return isSelected ? _itemParentCurrency(model) : _itemCashBackDetail(model);
   }
 
-  Widget _itemParentCurrency(CurrencyModel model) =>
+  // Đây là widget hiển thị cho mục đã được chọn (isSelected == true).
+  Widget
+  _itemParentCurrency(CurrencyModel model) =>
+      // VxBox là một widget từ thư viện velocity_x giúp dễ dàng tạo box với các thuộc tính như
+      // màu nền, padding, viền tròn, bóng đổ, và margin.
       VxBox(
             child:
                 VxBox(child: _itemDetail())
@@ -57,11 +78,14 @@ class ItemCurrency extends StatelessWidget {
         .make();
   }
 
+  // _itemDetail() là một hàm được gọi để tạo giao diện chi tiết của mục tiền tệ.
   Widget _itemDetail() => HStack([
     ImageCaches(
       url: model.icon,
       width: 40,
       height: 40,
+      // Hiển thị hình ảnh của đơn vị tiền tệ từ model.icon. Nếu không tải được hình ảnh,
+      // sẽ hiển thị một hình ảnh mặc định (MyImage.ic_token_default).
       urlError: MyImage.ic_token_default,
       radius: 90,
     ),
