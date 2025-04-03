@@ -9,7 +9,15 @@ import 'package:bitnan/resource/image.resource.dart';
 import 'package:bitnan/resource/style.resource.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+/*
+   để hiển thị thông tin về tài khoản ONUS và các tùy chọn cho người dùng liên quan đến tài khoản ONUS
+    khi họ muốn rút tài sản từ Bitback. 
+   Nó cung cấp hai nút để người dùng có thể lựa chọn, 
+   và một số thông tin liên quan đến tài khoản ONUS.
+ */
 class PopupVNDC extends StatelessWidget {
+  // : Một tham số callback tùy chọn.
+  // Nếu được cung cấp, hàm action sẽ được gọi khi người dùng nhấn vào nút "Tôi đã có tài khoản ONUS".
   final VoidCallback? action;
 
   const PopupVNDC({Key? key, this.action}) : super(key: key);
@@ -32,6 +40,7 @@ class PopupVNDC extends StatelessWidget {
               children: [
                 Column(
                   children: [
+                    // Hiển thị một hình ảnh biểu tượng (có thể là biểu tượng của ONUS).
                     const ImageCaches(
                       height: 54,
                       width: 54,
@@ -94,3 +103,11 @@ class PopupVNDC extends StatelessWidget {
     await launchUrlString(kUrlVndc);
   }
 }
+
+
+/*
+Tóm tắt:
+1. PopupVNDC là một pop-up giao diện người dùng cho phép người dùng lựa chọn một trong hai hành động:
+2. Nếu đã có tài khoản ONUS, nhấn nút để thực hiện hành động nào đó (do callback action xác định).
+3. Nếu chưa có tài khoản ONUS, nhấn nút để được chuyển đến trang web đăng ký tài khoản ONUS.
+ */

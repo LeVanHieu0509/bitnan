@@ -41,6 +41,14 @@ Future<T?>? goToAndRemoveAll<T>({required String screen, dynamic argument}) =>
 
 spaceWidth(double value) => SizedBox(width: value);
 
+boxDecorationAppbar() => const BoxDecoration(
+  gradient: LinearGradient(
+    colors: [MyColor.blueStartAppBar, MyColor.blueEndAppBar],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  ),
+);
+
 Future<void> checkMaintenance({VoidCallback? callback}) async {
   print("checkMaintenance");
 

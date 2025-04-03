@@ -1,8 +1,10 @@
 import 'package:bitnan/@core/data/api/cash_back.api.dart';
+import 'package:bitnan/@core/data/api/transfer_reward.api.dart';
 import 'package:bitnan/@core/data/api/upload.api.dart';
 import 'package:bitnan/@core/data/api/user.api.dart';
 import 'package:bitnan/@core/data/local/storage/data.storage.dart';
 import 'package:bitnan/@core/data/repo/cash_back.repo.dart';
+import 'package:bitnan/@core/data/repo/transfer_reward.repo.dart';
 import 'package:bitnan/@core/data/repo/user.repo.dart';
 import 'package:bitnan/@core/service/dynamic_link.service.dart';
 import 'package:bitnan/screen/splash/splash.controller.dart';
@@ -39,5 +41,7 @@ class SplashBinding extends Bindings {
     Get.put(UserRepo(Get.find(), Get.find()), permanent: true);
     Get.put(CashBackApi(), permanent: true);
     Get.put(CashBackRepo(Get.find()), permanent: true);
+    Get.put(TransferRewardApi(), permanent: true);
+    Get.put(TransferRewardRepo(Get.find()), permanent: true);
   }
 }
